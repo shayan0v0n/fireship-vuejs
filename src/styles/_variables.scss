@@ -1,0 +1,13 @@
+$primary_dark: #12181b;
+$secondary_dark: #212529;
+$primary_white: #ffffff;
+$secondary_white: #dbe1e8;
+$primary_gray: #b2becd;
+$primary_green: #09c372;
+$primary_blue: #498afb;
+$primary_purple: #9166cc;
+$primary_orange: #fa7f45;
+
+@mixin transformY($val) {
+    transform: translateY($val);
+}
