@@ -1,20 +1,22 @@
 <script>
 import useDarkMode from '../hooks/useDarkMode';
+import Modal from './UI/Modal.vue';
 
 
 export default {
     setup() {
-        const {currentTheme, toggleTheme} = useDarkMode()
-
+        const { currentTheme, toggleTheme } = useDarkMode();
         return {
             currentTheme,
             toggleTheme
-        }
-    }
+        };
+    },
+    components: { Modal }
 }
 
 </script>
 <template>
+<Modal />
 <nav class="navbar navbar-expand-lg row"
 :class="[currentTheme==='light' ? 'navbar-light bg-light header-light' : 'navbar-dark bg-dark header-dark']">
 
@@ -58,7 +60,7 @@ export default {
             <fa icon="rocket" class="icons_item  nav-link" />
             </router-link>
             <fa icon="moon" class="icons_item  nav-link" @click="() => toggleTheme()" />
-            <fa icon="user" class="icons_item nav-link" />
+            <fa icon="user" class="icons_item nav-link " data-bs-toggle="modal" data-bs-target="#loginModal" />
         </div>
     </div>
 </nav>
@@ -68,6 +70,9 @@ export default {
 @import '../styles/variables.scss';
 .header-light {
     margin: 0;
+    position: sticky;
+    z-index: 10;
+    top: 0;
      .center-list {
          font-weight: bold;
          cursor: pointer;
@@ -94,6 +99,9 @@ export default {
 
 .header-dark {
     margin: 0;
+    position: sticky;
+    z-index: 10;
+    top: 0;
     a {
         text-decoration: none;
     }

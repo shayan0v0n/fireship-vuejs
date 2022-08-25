@@ -34,7 +34,7 @@ import useDarkMode from './hooks/useDarkMode';
 
 body {
   background: $secondary_white;
-  font-family: 'vazir' !important;
+  font-family: sans-serif !important;
   padding: 0;
   margin: 0;
 }
