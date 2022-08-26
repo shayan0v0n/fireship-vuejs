@@ -8,7 +8,7 @@ export default {
 </script>
 
 <template>
-    <router-link :to="`/courses/${tagpath}`"><span><slot></slot></span></router-link>
+    <router-link :to="`/tags/${tagpath}`"><span><slot></slot></span></router-link>
 </template>
 
 <style scoped lang="scss">
