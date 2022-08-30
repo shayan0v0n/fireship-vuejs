@@ -1,7 +1,7 @@
-# Vue 3 + Vite
+# Fireship With Reactjs
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+This Shop Created With Vuejs - Bootstrap - Axios - Firebase😉✔️
+This Project Copied As https://Fireship.io
 
-## Recommended IDE Setup
-
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+# If You're Live In Iran
+Please Turn Your VPN Before Run Project, Couse I Use Firebase In This Project:)
