@@ -1,7 +1,7 @@
 <script>
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import useDarkMode from '../hooks/useDarkMode';
 import LicenseCheckout from '../components/LicenseCheckout.vue';
 import LicensePlan from '../components/LicensePlan.vue';
@@ -9,9 +9,24 @@ import LicensePlan from '../components/LicensePlan.vue';
 export default {
     setup() {
         const currentPath = useRoute().params.path;
+        const router = useRouter()
+        const currentAccount = JSON.parse(localStorage.getItem('account'))
+        const currentCartAcc = JSON.parse(localStorage.getItem('account')) ? JSON.parse(localStorage.getItem('account')).cart : null
+        const currentApprovedAcc = JSON.parse(localStorage.getItem('account')) ? JSON.parse(localStorage.getItem('account')).approvedCart : null
         const { currentTheme } = useDarkMode();
+        let productExist = null
         let lessons = ref([]);
         let licenses = ref(null)
+
+
+
+        if (currentAccount !== null) {
+            const currentCarts = currentCartAcc.concat(currentApprovedAcc);
+            productExist = currentCarts.findIndex(item => item.path == currentPath)
+        }
+
+
+
         onMounted(() => {
             axios.get("https://fireship-6470a-default-rtdb.firebaseio.com/lessons.json")
                 .then(res => {
@@ -24,10 +39,27 @@ export default {
                 licenses.value = res.data
             }).catch(err => console.log(err))
         });
+
+        const addtocartHandler = () => {
+            const currentAccount = JSON.parse(localStorage.getItem('account'))
+            const currentCart = currentAccount.cart
+            currentCart.push(lessons.value)
+            const updatedAccount = {
+                ...currentAccount,
+                cart: currentCart
+            }
+
+            localStorage.setItem('account', JSON.stringify(updatedAccount))
+            router.push('/dashboard/cartDashboard')
+        }
+
         return {
             lessons,
             licenses,
-            currentTheme
+            currentTheme,
+            productExist,
+            currentAccount,
+            addtocartHandler
         };
     },
     components: { LicenseCheckout, LicensePlan }
@@ -48,7 +80,8 @@ export default {
                     </div>
                 </section>
                 <section class="addtocart">
-                    <button class="btn w-100 mt-3 py-3">ADD TO CART</button>
+                    <button class="btn w-100 mt-3 py-3" @click="addtocartHandler()" v-if="productExist == -1 && currentAccount !== null">ADD TO CART</button>
+                    <button class="btn w-100 mt-3 py-3" disabled v-else>ADD TO CART</button>
                 </section>
                 <section id="checkout" class="my-5">
                     <LicenseCheckout />

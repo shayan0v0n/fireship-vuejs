@@ -1,22 +1,30 @@
 <script>
+import axios from 'axios';
+import { inject, onMounted, provide, ref } from 'vue';
 import useDarkMode from '../hooks/useDarkMode';
-import Modal from './UI/Modal.vue';
+import LoginModal from './LoginModal.vue';
 
 
 export default {
-    setup() {
+    setup(props) {
         const { currentTheme, toggleTheme } = useDarkMode();
+        let currentAccount = ref(JSON.parse(localStorage.getItem('account')))
+
+        const accountExitHandler = () => {currentAccount.value = JSON.parse(localStorage.getItem('account'))}
+
         return {
             currentTheme,
+            currentAccount,
+            accountExitHandler,
             toggleTheme
         };
     },
-    components: { Modal }
+    components: { LoginModal }
 }
 
 </script>
 <template>
-<Modal />
+<LoginModal @accountExist="accountExitHandler" />
 <nav class="navbar navbar-expand-lg row"
 :class="[currentTheme==='light' ? 'navbar-light bg-light header-light' : 'navbar-dark bg-dark header-dark']">
 
@@ -30,7 +38,7 @@ export default {
             <li class="nav-item center-list">
                 <router-link :to="{name: 'lessonsPage'}">
                     <div class="m-2 nav-link d-flex">
-                        <fa icon="tv" />
+                        <fa icon="tv" class="icons" />
                         LESSIONS
                     </div>
                 </router-link>
@@ -38,7 +46,7 @@ export default {
             <li class="nav-item center-list">
                 <router-link :to="{name: 'coursesPage'}">
                     <div class="m-2 nav-link d-flex">
-                        <fa icon="suitcase" />
+                        <fa icon="suitcase" class="icons" />
                     COURSES
                     </div>
                 </router-link>
@@ -46,7 +54,7 @@ export default {
             <li class="nav-item center-list">
                 <router-link :to="{name: 'tagsPage'}">
                     <div class="m-2 nav-link d-flex">
-                        <fa icon="tags" />
+                        <fa icon="tags" class="icons" />
                         TAGS
                     </div>
                 </router-link>
@@ -59,8 +67,9 @@ export default {
             <router-link :to="{name: 'licensePage'}">
             <fa icon="rocket" class="icons_item  nav-link" />
             </router-link>
-            <fa icon="moon" class="icons_item  nav-link" @click="() => toggleTheme()" />
-            <fa icon="user" class="icons_item nav-link " data-bs-toggle="modal" data-bs-target="#loginModal" />
+            <fa icon="moon" class="icons_item  nav-link"  @click="() => toggleTheme()" />
+            <fa icon="user" class="icons_item nav-link " data-bs-toggle="modal" data-bs-target="#loginModal" v-if="currentAccount == null" />
+            <router-link to="/dashboard" v-else ><fa icon="circle-user" class="icons_item nav-link" /></router-link>
         </div>
     </div>
 </nav>
@@ -81,9 +90,9 @@ export default {
      img {
          width: 13%;
      }
-
-     .icons_item {
-         font-size: 1.6rem;
+    
+    .icons_item {
+        font-size: 1.6rem;
         color: $primary_gray;
         transition: .3;
         cursor: pointer;

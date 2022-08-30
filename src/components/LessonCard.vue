@@ -11,7 +11,8 @@ export default {
     },
     props: {
         lessonData: {},
-        lessonShort: {}
+        lessonShort: {},
+        dashboardCart: {}
     },
     components: { Tag }
 }
@@ -21,10 +22,11 @@ export default {
     <div class="card course-card m-2 text-start" :class="[currentTheme == 'dark' ? 'course-card-dark' : null]">
         <img :src="`/assets/imgs/${lessonData.path}.webp`" alt="courses-img" v-show="lessonShort">
         <div class="card-body m-3">
-            <router-link :to="`lessons/${lessonData.path}`"><h3>{{ lessonData.title }}</h3></router-link>
+            <router-link :to="`lessons/${lessonData.path}`" v-if="!dashboardCart"><h3>{{ lessonData.title }}</h3></router-link>
+            <h3 v-else :style="{cursor: 'default'}">{{ lessonData.title }}</h3>
             <span>{{ lessonData.desc }}</span>
         </div>
-        <div class="m-3">
+        <div class="m-3" v-show="!dashboardCart">
             <span v-for="tag in lessonData.tags">
                 <Tag :tagpath="tag">{{ tag }}</Tag>
             </span>
