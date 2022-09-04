@@ -100,6 +100,14 @@ import CardPlaceholder from '../components/UI/CardPlaceholder.vue';
                         <CourseCard :courseData="course" />
                     </div>
                 </div>
+                <div class="row mt-3" v-else>
+                    <div class="col-12 col-md-6">
+                        <CardPlaceholder />
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <CardPlaceholder />
+                    </div>
+                </div>
             </div>
             <div class="mt-5">
                 <h2>MODERN FULLSTACK</h2>
@@ -152,7 +160,7 @@ import CardPlaceholder from '../components/UI/CardPlaceholder.vue';
                     <Tweet :tweetData="tweet" />
                 </div>
             </div>
-            <div class="row mt-3 m-0" v-else>
+            <div class="row mt-3 container m-auto" v-else>
                 <div class="col-12 col-md-4" v-for="tweet in [0,1,2,3,4,5]">
                     <CardPlaceholder :isCard="true"/>
                 </div>
