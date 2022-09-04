@@ -68,7 +68,7 @@ export default {
 </script>
 
 <template>
-    <div class="text-center single-lesson"  :class="[currentTheme == 'dark' ? 'single-lesson-dark' : null]">
+    <div class="text-center single-lesson"  :class="[currentTheme == 'dark' ? 'single-lesson-dark' : null]" v-if="lessons.path">
         <div class="row container m-auto py-5">
             <div class="col-12 col-md-9">
                 <section class="card" id="product">
@@ -96,6 +96,42 @@ export default {
                         <li><a href="#product">PRODUCTS</a></li>
                         <li><a href="#checkout">CHECKOUT</a></li>
                         <li><a href="#license">LICENSE</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div v-else class="text-center single-lesson"  :class="[currentTheme == 'dark' ? 'single-lesson-dark' : null]" >
+        <div class="row container m-auto py-5">
+            <div class="col-12 col-md-9">
+                <section class="card" id="product">
+                    <img :src="`/assets/imgs/placeholder.png`" class="w-100" alt="">
+                    <div class="card-body text-start">
+                        <h2 class="card-title"><span class="placeholder col-5"></span></h2>
+                        <p class="card-text"><span class="placeholder col-8"></span></p>
+                        <p class="card-text price"><span class="placeholder col-2"></span></p>
+                    </div>
+                </section>
+                <section class="addtocart">
+                    <button class="btn w-100 mt-3 py-3" disabled>ADD TO CART</button>
+                </section>
+                <section id="checkout" class="my-5">
+                    <LicenseCheckout />
+                </section>
+                <section id="license">
+                    <div class="row">
+                        <div class="col-12 col-md-4" v-for="items in [0, 1, 2]">
+                            <CardPlaceholder />
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="col col-md-3 aside-right">
+                <div>
+                    <ul class="text-center">
+                        <li><span class="placeholder col-7"></span></li>
+                        <li><span class="placeholder col-5"></span></li>
+                        <li><span class="placeholder col-3"></span></li>
                     </ul>
                 </div>
             </div>
