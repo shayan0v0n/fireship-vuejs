@@ -38,7 +38,14 @@ import LicenseCheckout from '../components/LicenseCheckout.vue';
 <template>
     <div class="pro mx-3">
         <h3 class="py-3">PRO</h3>
-            <LicensePlan :licenses="licenses" />
+            <div v-if="licenses">
+                <LicensePlan :licenses="licenses" />
+            </div>
+            <div v-else class="row my-5">
+                <div class="col-12 col-md-4" v-for="item in [0, 1, 2]">
+                    <CardPlaceholder :isCard="true" />
+                </div>
+            </div>
             <LicenseCheckout />
         <section class="py-5 text-center pro-tweets">
             <div class="mb-3">
