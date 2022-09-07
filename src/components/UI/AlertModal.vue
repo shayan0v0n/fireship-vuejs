@@ -1,5 +1,13 @@
 <script>
+  import useDarkMode from '../../hooks/useDarkMode';
 export default {
+  setup() {
+    const { currentTheme } = useDarkMode();
+
+    return {
+      currentTheme
+    }
+  },
   props: {
     alertTitle: {}
   }
@@ -8,7 +16,7 @@ export default {
 </script>
 
 <template>
-<div class="modal fade modal-lg" id="alertModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade modal-lg" id="alertModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" :class="[currentTheme === 'dark' ? 'modalDark' : null]">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -24,6 +32,8 @@ export default {
 </template>
 
 <style>
-
+.modalDark {
+  color: black;
+}
 
 </style>
