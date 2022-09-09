@@ -1,11 +1,32 @@
 <script>
+import { ref, onUpdated} from 'vue';
 import useDarkMode from '../hooks/useDarkMode';
 
 export default {
     setup() {
         const { currentTheme } = useDarkMode()
+        const cartNumber = ref('')
+        const checkoutBtnValidate = ref(false)
+        const currentAccount = JSON.parse(localStorage.getItem('account'))
+
+        onUpdated(() => {
+            if (cartNumber.value.trim().length > 5) {
+                checkoutBtnValidate.value = true
+            }else {
+                checkoutBtnValidate.value = false
+            }
+        })
+
+        const checkoutPayHandler = () => {
+            alert("Comming Soon...")
+        }
+
         return {
-            currentTheme
+            currentTheme,
+            cartNumber,
+            currentAccount,
+            checkoutBtnValidate,
+            checkoutPayHandler
         }
     }
 }
@@ -19,8 +40,9 @@ export default {
             <hr>
             <div class="text-start">
                 <span>Credit Or Debit Card</span>
-                <input class="form-control" placeholder="Card Number (Fake Number)" />
-                <button class="btn">PAY</button>
+                <input class="form-control" placeholder="Card Number (Fake Number)" v-model="cartNumber" />
+                <button class="btn" v-if="checkoutBtnValidate && currentAccount !== null" @click="checkoutPayHandler">PAY</button>
+                <button class="btn" disabled v-else>PAY</button>
             </div>
         </div>
     </section>
